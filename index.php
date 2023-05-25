@@ -1,6 +1,6 @@
 <?php include("template/cabecera.php");?>
 
-                xupalo feña 
+                xupalo seba 
                 
 <?php include("template/pie.php");?>
             
