@@ -1,3 +1,14 @@
+<?php
+
+session_start();
+$username=$_SESSION['usuario_nombre'];
+$userlastname=$_SESSION['usuario_apellido'];
+$email=$_SESSION['usuario_email'];
+$fechanacimiento=$_SESSION['usuario_fechanacimiento'];
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,11 +16,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PrestigueTravels</title>
-    <link rel="stylesheet" href="../users/css/bootstrap.css"/>
+    <link rel="stylesheet" href="./css/bootstrap.css"/>
 </head>
 <body>
     
-    <nav class="navbar navbar-expand navbar-dark bg-primary">
+    <nav class="navbar navbar-expand navbar-dark bg-primary text-white">
         
         
         <div class="navbar-collapse justify-content-start">
@@ -26,16 +37,12 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="paquetes.php">Paquetes</a>
+                        <a class="nav-link text-white" href="../../paquetes.php">Paquetes</a>
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="../hoteles.php">Hoteles</a>
+                        <a class="nav-link text-white" href="../../hoteles.php">Hoteles</a>
                     </li>
-
-            
-
-
 
                     
                 </ul>
@@ -47,9 +54,21 @@
                 <ul class="navbar-nav">
 
 
-                    <li class="nav-item ">
+                    <li class="nav-item">
 
-                        <a class="nav-link text-white" href="iniciar.php">Iniciar sesion/Crear Cuenta</a>
+                        <div class="btn-group">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+
+                                    <?php echo "Cuenta: $username $userlastname";?></a>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
+                                <a class="dropdown-item" href="perfil.php">Ver perfil</a>
+                                <a class="dropdown-item" href="../../control_cerrarsesion.php">Cerrar sesion</a>
+                                
+                            </div>
+                        </div>
+
 
                     </li>
 
@@ -69,3 +88,9 @@
         <br/>
             
             <div class="row">
+
+
+
+
+
+

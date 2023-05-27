@@ -1,7 +1,5 @@
-                </div>
+            </div>
         </div>  
-
-        
 
         
 
@@ -14,7 +12,7 @@
 
                 <p class="small">@Copyright  Todos los derechos reservados.</p>
 
-
+                
             </div>
 
         </footer>

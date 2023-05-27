@@ -8,7 +8,7 @@
             <div class="col-md-4">
 
 
-                <br/><br/><br/><br/><br/><br/><br/>
+                <br/>
                 <div class="card">
                     <div class="card-header">
 
@@ -59,7 +59,11 @@
                     </div>
                     
                 </div>
+
+                <br/><br/><br/><br/>
                 
             </div>
+
+            
             
 <?php include("template/pie.php");?>
