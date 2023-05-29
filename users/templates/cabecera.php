@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+$user_id=$_SESSION['usuario_id'];
 $username=$_SESSION['usuario_nombre'];
 $userlastname=$_SESSION['usuario_apellido'];
 $email=$_SESSION['usuario_email'];
@@ -43,6 +44,10 @@ $fechanacimiento=$_SESSION['usuario_fechanacimiento'];
                     <li class="nav-item">
                         <a class="nav-link text-white" href="../../hoteles.php">Hoteles</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../wishlist.php">WishList</a>
+                    </li>
+
 
                     
                 </ul>

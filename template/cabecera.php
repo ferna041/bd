@@ -32,7 +32,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" href="../hoteles.php">Hoteles</a>
                     </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../wishlist.php">WishList</a>
+                    </li>
             
 
 
