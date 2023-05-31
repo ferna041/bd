@@ -122,6 +122,7 @@ $paquetes_deseados = $sentenciaSQL2->fetch_all(MYSQLI_ASSOC);
     </div>
     
   </div>
+  </div>
 
   <?php } ?>
 

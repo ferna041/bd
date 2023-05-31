@@ -25,7 +25,7 @@ $paquetes=$selectSQL->fetch_all(MYSQLI_ASSOC);
                 <h6 class="card-Viaje text-center"><?php echo $paquete["paquetes_nombre"]; ?></h6>
 
                 <div class="text-center">
-                    <a class="btn btn-primary" href="detalle_paquetes.php?id=<?php echo $paquete["productos_id"];?>&token=<?php
+                    <a class="btn btn-dark" href="detalle_paquetes.php?id=<?php echo $paquete["productos_id"];?>&token=<?php
                     echo hash_hmac("sha1",$paquete["productos_id"],KEY_TOKEN);?>">Ver detalles</a>
 
                 

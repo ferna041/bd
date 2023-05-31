@@ -67,6 +67,16 @@ if($id==''||$token==''){
 
 ?> 
 
+<?php
+
+        if(!empty($_POST["btn-atc"])){
+                
+            $sqll=$conexion->query("INSERT INTO carrito VALUES ($user_id,$id)");  
+            echo '<div class="alert alert-success"> Agregado al carrito! </div>';
+
+        } 
+?>
+
 
 <div class="card bg-primary text-center text-white text-left">
   <div class="card-body">
@@ -120,7 +130,23 @@ if($id==''||$token==''){
             <h6><b> Valor por persona:</b></h6>
             <?php  echo "<p class=small>$".$preciopp."</p>"  ?>
 
-            <a name="" id="" class="btn btn-light" href="#" role="button">Agregar al carrito</a>
+            <?php 
+
+                $sql33=$conexion->query("SELECT * FROM carrito WHERE productos_id=$id AND usuario_id=$user_id");
+            
+                if((sizeof($datos=$sql33->fetch_all()))<3){ ?>
+                    <form method="post">
+                        <br/>
+                        <input name="btn-atc" class="btn btn-dark" type="submit" value="Agregar al carrito">
+                    </form>
+
+                    <?php 
+                    }else{
+                        echo '<a name="" id="" class="btn btn-light" href="#" role="button">Máxima cantidad de este producto en el carrito</a>'
+                    ?>
+
+
+            <?php } ?>
 
 
             <?php 

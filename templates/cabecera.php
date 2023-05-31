@@ -47,6 +47,9 @@ $fechanacimiento=$_SESSION['usuario_fechanacimiento'];
                     <li class="nav-item">
                         <a class="nav-link text-white" href="../wishlist.php">WishList</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../carrito.php">Carrito</a>
+                    </li>
 
 
                     
