@@ -1,4 +1,9 @@
-<?php include("template/cabecera.php");?>
+<?php 
+
+include("templates/cabecera.php");
+include("config.php");
+
+?>
 
 
 <?php
@@ -18,7 +23,14 @@ $hoteles=$selectSQL->fetch_all(MYSQLI_ASSOC);
         <div class="card-body">
             <h6 class="card-Viaje"><?php echo $hotel["hoteles_nombre"]; ?></h6>
             <p class="small"><?php  echo "Ubicacion: ".$hotel["hoteles_ciudad"];  ?></p>
-            <a name="" id="" class="btn btn-primary" href="#" role="button">Compra ya!</a>
+
+            <div class="text-center">
+
+                <a class="btn btn-primary" href="detalle_hoteles.php?id=<?php echo $hotel["productos_id"];?>&token=<?php
+                echo hash_hmac("sha1",$hotel["productos_id"],KEY_TOKEN);?>">Ver detalles</a>
+                
+            </div>
+
         </div>
     </div>
     <br/>
@@ -32,4 +44,4 @@ $hoteles=$selectSQL->fetch_all(MYSQLI_ASSOC);
 
 
 
-<?php include("template/pie.php");?>
+<?php include("templates/pie.php");?>

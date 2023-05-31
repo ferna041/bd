@@ -1,2 +1,0 @@
-# tarea bdd
- seba xupalo

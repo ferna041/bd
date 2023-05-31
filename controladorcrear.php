@@ -17,7 +17,7 @@ if(!empty($_POST["btncrear"])){
         if (!($datos=$sql2->fetch_object())){
             
             $sql=$conexion->query("INSERT INTO usuarios (usuario_nombre,usuario_apellido,usuario_email,usuario_fechanacimiento,usuario_clave) VALUES ('$nombre','$apellido','$email','$fecha','$clave')");
-            header("location:iniciar.php");
+            header("location:index.php");
             
         } else{
             

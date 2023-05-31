@@ -1,23 +1,18 @@
-                </div>
-
-                <br/><br/><br/>
-
+            </div>
         </div>  
 
-        
-
-        
+        <br/><br/><br/>
 
         <footer>
 
             <div class="container-fluid bg-primary text-center text-white p-1">
 
                 
-                <p class="small"><img src="img/Logo_UTFSM.png" width="30" height="30">PrestigueTravels</p>
+                <p class="small"><img src="../img/Logo_UTFSM.png" width="30" height="30">PrestigueTravels</p>
 
                 <p class="small">@Copyright  Todos los derechos reservados.</p>
 
-
+                
             </div>
 
         </footer>

@@ -1,6 +1,6 @@
 <?php
 
-include("template/cabecera.php");
+include("templates/cabecera.php");
 
 include("conexionbd.php");
 include("config.php");
@@ -21,7 +21,7 @@ if($id==''||$token==''){
     $token_tmp=hash_hmac('sha1',$id,KEY_TOKEN);
 
     if($token==$token_tmp){
-
+        
         $sql=$conexion->query("SELECT paquetes_nombre,paquetes_airida,paquetes_airvuelta,paquetes_preciopp,paquetes_maxpp FROM paquetes WHERE productos_id=$id");
         
         if ($datos=$sql->fetch_object()){
@@ -31,26 +31,41 @@ if($id==''||$token==''){
             $vuelovuelta=$datos->paquetes_airvuelta;
             $preciopp=$datos->paquetes_preciopp;
             $maxpp=$datos->paquetes_maxpp;
-
+            
             $sql2=$conexion->query("SELECT * FROM hoteles INNER JOIN hoteles_paquetes ON hoteles.productos_id=hoteles_paquetes.hoteles_id AND 
                                     paquetes_id=$id;");
 
             $hoteles=$sql2->fetch_all(MYSQLI_ASSOC);
-
+            
         }
 
     } else{
-
+        
         echo 'Error al procesar';
         exit;
 
     }
-
+    
 }
 
 
 ?>
 
+<?php
+
+        if(!empty($_POST["btn-atw"])){
+                
+            $sql=$conexion->query("INSERT INTO wishlist VALUES ($user_id,$id)");  
+            echo '<div class="alert alert-success"> Agregado a la wishlist! </div>';
+
+        } else if(!empty($_POST["btn-dtw"])){
+
+            $sql=$conexion->query("DELETE FROM wishlist WHERE producto_id=$id AND usuario_id=$user_id");
+            echo '<div class="alert alert-success"> Borrado de la wishlist! </div>';
+
+        }
+
+?> 
 
 
 <div class="card bg-primary text-center text-white text-left">
@@ -74,10 +89,10 @@ if($id==''||$token==''){
 
             <?php
             
-                foreach($hoteles as $hotel){
+            foreach($hoteles as $hotel){
 
                     echo "<h6><b> Destino $i</b></h6>";
-
+                    
                     echo "<p class=small> Hotel: ".$hotel["hoteles_nombre"]." </p>";
 
                     echo "<p class=small> Ciudad: ".$hotel["hoteles_ciudad"]." </p>";
@@ -107,11 +122,35 @@ if($id==''||$token==''){
 
             <a name="" id="" class="btn btn-light" href="#" role="button">Agregar al carrito</a>
 
+
+            <?php 
+
+                $sql3=$conexion->query("SELECT * FROM wishlist WHERE producto_id=$id AND usuario_id=$user_id");
+            
+                if(!($datos=$sql3->fetch_object())){ ?>
+                    <form method="post">
+                        <br/>
+                        <input name="btn-atw" class="btn btn-dark" type="submit" value="Agregar a Wishlist">
+                    </form>
+
+
+            <?php } 
+                else{ ?>
+
+                    <form method="post">
+                        <br/>
+                        <input name="btn-dtw" class="btn btn-dark" type="submit" value="Eliminar de wishlist">
+                    </form>
+
+
+            <?php } ?>
+            
+            
+
         </div>
 
-
     </div>
-
+    
 </div>
 
 
@@ -120,4 +159,5 @@ if($id==''||$token==''){
 
 
 
-<?php include("template/pie.php"); ?>
+
+<?php include("templates/pie.php"); ?>
