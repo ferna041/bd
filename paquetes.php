@@ -22,10 +22,11 @@ $paquetes=$selectSQL->fetch_all(MYSQLI_ASSOC);
             <img class="card-img-top" src="https://images2.alphacoders.com/946/946565.jpg" alt="">
             <div class="card-body">
                 
-                <h6 class="card-Viaje text-center"><?php echo $paquete["paquetes_nombre"]; ?></h6>
+                <h6 class="card-Viaje text-center"> <b><?php echo $paquete["paquetes_nombre"]; ?></b></h6>
 
                 <div class="text-center">
-                    <a class="btn btn-dark" href="detalle_paquetes.php?id=<?php echo $paquete["productos_id"];?>&token=<?php
+                    <a class="btn btn-primary" href="detalle_paquetes.php?id=<?php echo $paquete["productos_id"];?>&token=<?php
+                    
                     echo hash_hmac("sha1",$paquete["productos_id"],KEY_TOKEN);?>">Ver detalles</a>
 
                 

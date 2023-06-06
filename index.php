@@ -59,27 +59,16 @@
 
                             <div class="text-center">
                                 <br/>
-                                <input name="btniniciosesion" class="btn btn-primary" type="submit" value="Iniciar sesion">
+                                <input name="btniniciosesion" href="users/index.php" class="btn btn-primary" type="submit" value="Iniciar sesion">
                                 <br/><br/>
                                 <a href="crearcuenta.php">¿No tienes una cuenta? Creala aquí!</a>
                             </div>
-
-                            
-
                         </form>
-                        
-                        
-                        
                     </div>
-                    
                 </div>
-
                 <br/><br/><br/><br/>
-                
             </div>
-
         </div>
-
     </div>
         
       

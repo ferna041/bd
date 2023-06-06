@@ -21,15 +21,33 @@ $lista_carrito = $sentenciaSQL->fetch_all(MYSQLI_ASSOC);
                 $comprobacion=$conexion->query("SELECT * FROM compras WHERE usuario_id=$compra[usuario_id] AND productos_id=$compra[productos_id]");
                 if(!($comprobacion->fetch_object())){
                     $agregar=$conexion->query("INSERT INTO compras VALUES ($compra[productos_id],$compra[usuario_id])");
+                    $lol=$conexion->query("SELECT * FROM productos WHERE producto_id=$compra[productos_id]");
+                    $lol=$lol->fetch_object();
+                    
+                    if(($lol->producto_tipo)==1){
+                        $agrgg=$conexion->query("INSERT INTO reseñas_hoteles VALUES ($compra[productos_id],$user_id,NULL,NULL,NULL,NULL,NULL)");
+                    }
+                    if(($lol->producto_tipo)==2){
+                        $agrgg=$conexion->query("INSERT INTO reseñas_paquetes VALUES ($compra[productos_id],$user_id,NULL,NULL,NULL,NULL,NULL)");
+                    }  
+                }
+                $lol=$conexion->query("SELECT * FROM productos WHERE producto_id=$compra[productos_id]");
+                $lol=$lol->fetch_object();
+
+                if(($lol->producto_tipo)==1){
+                    $cantidades=$conexion->query("UPDATE hoteles SET hoteles_habitacionesdisp=hoteles_habitacionesdisp-1 WHERE productos_id=$compra[productos_id]");
+                }
+                if(($lol->producto_tipo)==2){
+                    $cantidades=$conexion->query("UPDATE paquetes SET paquetes_disponibles=paquetes_disponibles-1 WHERE productos_id=$compra[productos_id]");
                 }
             }
-
             $sql=$conexion->query("DELETE FROM carrito");  
-            
             echo '<div class="alert alert-success"> COMPRA REALIZADA</div>';
-
         } 
 ?>
+
+
+
 
 <?php
 $sentenciaSQL= $conexion->query("SELECT * FROM hoteles INNER JOIN productos ON hoteles.productos_id=productos.producto_id INNER JOIN carrito 
@@ -40,10 +58,6 @@ $sentenciaSQL2= $conexion->query("SELECT * FROM paquetes INNER JOIN productos ON
                                                 ON productos.producto_id=carrito.productos_id AND usuario_id=$user_id AND producto_tipo=2");
 $paquetes_carrito = $sentenciaSQL2->fetch_all(MYSQLI_ASSOC);
 ?>
-
-
-
-
 
 
 <main>  

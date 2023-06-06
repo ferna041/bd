@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-06-2023 a las 16:24:55
+-- Tiempo de generación: 06-06-2023 a las 06:25:45
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -49,23 +49,26 @@ CREATE TABLE `compras` (
 --
 
 INSERT INTO `compras` (`productos_id`, `usuario_id`) VALUES
-(1, 1),
-(33, 1),
-(37, 1),
-(34, 1),
-(2, 1),
-(4, 1),
-(32, 3),
-(2, 3),
-(33, 3),
+(31, 3),
+(1, 3),
+(1, 4),
+(1, 5),
+(31, 5),
 (4, 3),
-(34, 3),
-(38, 3),
-(39, 3),
-(42, 3),
-(44, 3),
-(43, 3),
-(32, 4);
+(32, 3),
+(33, 3),
+(3, 3),
+(2, 3),
+(6, 3),
+(7, 3),
+(30, 3),
+(11, 3),
+(18, 3),
+(25, 3),
+(20, 3),
+(29, 3),
+(14, 3),
+(23, 3);
 
 -- --------------------------------------------------------
 
@@ -93,7 +96,7 @@ CREATE TABLE `hoteles` (
 --
 
 INSERT INTO `hoteles` (`productos_id`, `hoteles_nombre`, `hoteles_estrellas`, `hoteles_precio`, `hoteles_ciudad`, `hoteles_habitacionesdisp`, `hoteles_habitacionestotales`, `hoteles_estacionamiento`, `hoteles_piscina`, `hoteles_lavanderia`, `hoteles_petfriendly`, `hoteles_desayuno`) VALUES
-(1, 'Hotel del Mar', 4, 75000, 'Valparaíso', 20, 20, 1, 1, 1, 1, 1),
+(1, 'Hotel del Mar', 4, 75000, 'Valparaíso', 18, 20, 1, 1, 1, 1, 1),
 (2, 'Hotel Bella Vista', 3, 50000, 'Viña del Mar', 15, 15, 0, 1, 1, 0, 1),
 (3, 'Gran Hotel Santiago', 5, 120000, 'Santiago', 50, 50, 1, 1, 1, 1, 1),
 (4, 'Hotel Los Andes', 3, 30000, 'Linares', 10, 10, 0, 0, 0, 0, 0),
@@ -115,7 +118,7 @@ INSERT INTO `hoteles` (`productos_id`, `hoteles_nombre`, `hoteles_estrellas`, `h
 (20, 'Hotel Estrella del Norte', 3, 52000, 'Copiapó', 18, 18, 1, 0, 0, 1, 0),
 (21, 'Hotel Céntrico', 2, 30000, 'Rancagua', 10, 10, 1, 0, 0, 0, 0),
 (22, 'Hotel Costa Sur', 3, 68000, 'La Serena', 26, 26, 1, 1, 0, 1, 1),
-(23, 'Gran Hotel del Lago', 5, 125000, 'Puerto Montt', 55, 55, 1, 1, 1, 1, 1),
+(23, 'Gran Hotel del Lago', 5, 125000, 'Puerto Montt', 52, 55, 1, 1, 1, 1, 1),
 (24, 'Hotel Playa Blanca', 4, 82000, 'Iquique', 28, 28, 0, 1, 1, 1, 1),
 (25, 'Hotel Oasis del Valle', 3, 48000, 'Curicó', 16, 16, 0, 0, 1, 1, 0),
 (26, 'Hotel del Bosque', 2, 35000, 'Villarrica', 12, 12, 1, 0, 0, 0, 1),
@@ -207,8 +210,8 @@ CREATE TABLE `paquetes` (
 --
 
 INSERT INTO `paquetes` (`productos_id`, `paquetes_nombre`, `paquetes_airida`, `paquetes_airvuelta`, `paquetes_fechaida`, `paquetes_fechavuelta`, `paquetes_noches`, `paquetes_preciopp`, `paquetes_disponibles`, `paquetes_totales`, `paquetes_maxpp`) VALUES
-(31, 'Sur de Chile Basic', 'JetSamart', 'JetSamart', '2023-06-04', '2023-06-07', 3, 350000, 5, 5, 3),
-(32, 'Sur de Chile Medium', 'LATAM', 'LATAM', '2023-07-05', '2023-07-09', 4, 600000, 5, 5, 4),
+(31, 'Sur de Chile Basic', 'JetSamart', 'JetSamart', '2023-06-04', '2023-06-07', 3, 350000, 100, 5, 3),
+(32, 'Sur de Chile Medium', 'LATAM', 'LATAM', '2023-07-05', '2023-07-09', 4, 600000, 4, 5, 4),
 (33, 'Sur de Chile HIGH QUALITY', 'Jetsmart', 'jetsmart', '2023-07-10', '2023-07-16', 6, 1000000, 3, 3, 6),
 (34, 'Sur de Chile PREMIUM', 'Jetsmart', 'Jetsmart', '2023-07-20', '2023-07-27', 7, 1450000, 3, 3, 6),
 (35, 'Norte del País Basic', 'latam', 'latam', '2023-08-14', '2023-08-17', 3, 350000, 5, 5, 3),
@@ -216,7 +219,7 @@ INSERT INTO `paquetes` (`productos_id`, `paquetes_nombre`, `paquetes_airida`, `p
 (37, 'Norte del País HIGH QUALITY', 'jetsmart', 'latam', '2023-07-20', '2023-07-26', 6, 1000000, 3, 3, 6),
 (38, 'Norte del País PREMIUM', 'jetsmart', 'jetsmart', '2023-08-03', '2023-08-10', 7, 1450000, 3, 3, 6),
 (40, 'Paseo Central Medium', 'latam', 'latam', '2023-08-19', '2023-08-23', 4, 350000, 5, 5, 4),
-(42, 'Paseo Central PREMIUM', 'latam', 'latam', '2023-08-13', '2023-08-20', 7, 1450000, 3, 3, 6),
+(42, 'Paseo Central PREMIUM', 'latam', 'latam', '2023-08-13', '2023-08-20', 7, 1450000, 70, 3, 6),
 (41, 'oe pucón, no de villarica choro', 'latam', 'latam', '2023-08-10', '2023-08-13', 3, 350000, 3, 3, 6),
 (39, '$HILE', 'latam', 'latam', '2023-08-20', '2023-08-26', 6, 1700000, 5, 5, 3),
 (43, 'Playas paradisiacas', 'jetsmart', 'latam', '2023-09-01', '2023-09-06', 5, 1000000, 5, 5, 5),
@@ -288,6 +291,70 @@ INSERT INTO `productos` (`producto_id`, `producto_tipo`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `reseñas_hoteles`
+--
+
+CREATE TABLE `reseñas_hoteles` (
+  `productos_id` int(5) DEFAULT NULL,
+  `usuario_id` int(5) DEFAULT NULL,
+  `limpieza` int(2) DEFAULT NULL,
+  `servicio` int(2) DEFAULT NULL,
+  `decoración` int(2) DEFAULT NULL,
+  `calidad_camas` int(2) DEFAULT NULL,
+  `Reseña` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `reseñas_hoteles`
+--
+
+INSERT INTO `reseñas_hoteles` (`productos_id`, `usuario_id`, `limpieza`, `servicio`, `decoración`, `calidad_camas`, `Reseña`) VALUES
+(1, 3, 5, 5, 5, 5, 'eselente\r\n                '),
+(1, 4, 3, 2, 4, 4, 'shupalo\r\n        '),
+(1, 5, 5, 3, 2, 3, 'Habían condones tiraos en los bañosss...                '),
+(4, 3, 2, 5, 3, 4, 'Déjanos un comentario!\r\n        '),
+(3, 3, 5, 5, 5, 5, 'Déjanos un comentario!\r\n        '),
+(2, 3, 4, 5, 5, 5, 'Déjanos un comentario!\r\n        '),
+(6, 3, 1, 1, 1, 1, 'Déjanos un comentario!\r\n        '),
+(7, 3, NULL, NULL, NULL, NULL, NULL),
+(30, 3, NULL, NULL, NULL, NULL, NULL),
+(11, 3, NULL, NULL, NULL, NULL, NULL),
+(18, 3, NULL, NULL, NULL, NULL, NULL),
+(25, 3, NULL, NULL, NULL, NULL, NULL),
+(20, 3, NULL, NULL, NULL, NULL, NULL),
+(29, 3, NULL, NULL, NULL, NULL, NULL),
+(14, 3, NULL, NULL, NULL, NULL, NULL),
+(23, 3, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `reseñas_paquetes`
+--
+
+CREATE TABLE `reseñas_paquetes` (
+  `productos_id` int(5) NOT NULL,
+  `usuario_id` int(5) NOT NULL,
+  `calidad_hoteles` int(1) DEFAULT NULL,
+  `transporte` int(1) DEFAULT NULL,
+  `reseña` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `servicio` int(2) DEFAULT NULL,
+  `precio_calidad` int(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `reseñas_paquetes`
+--
+
+INSERT INTO `reseñas_paquetes` (`productos_id`, `usuario_id`, `calidad_hoteles`, `transporte`, `reseña`, `servicio`, `precio_calidad`) VALUES
+(31, 3, NULL, NULL, NULL, NULL, NULL),
+(31, 5, NULL, NULL, NULL, NULL, NULL),
+(32, 3, NULL, NULL, NULL, NULL, NULL),
+(33, 3, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuarios`
 --
 
@@ -308,7 +375,8 @@ INSERT INTO `usuarios` (`usuario_id`, `usuario_nombre`, `usuario_apellido`, `usu
 (1, 'Sebastian', 'Sepulveda', 'sebastian.sepulvedaf@usm.cl', '2023-05-21', 'seba123'),
 (2, 'xupalo', 'ola', 'seba401hd@hotmail.com', '2023-05-07', 'seba123'),
 (3, 'fenia', 'adskvjbe', 'fer.shalgadom@gmail.com', '2000-01-09', '123'),
-(4, 'mili', 'milosa', 'mili@gmail.com', '2024-03-16', '321');
+(4, 'mili', 'milosa', 'mili@gmail.com', '2024-03-16', '321'),
+(5, 'fred', 'marco', 'fredi@duoc.cl', '2023-07-09', '123');
 
 -- --------------------------------------------------------
 
@@ -344,7 +412,10 @@ INSERT INTO `wishlist` (`usuario_id`, `producto_id`) VALUES
 (3, 1),
 (1, 1),
 (3, 32),
-(4, 2);
+(4, 2),
+(3, 2),
+(3, 2),
+(5, 1);
 
 --
 -- Índices para tablas volcadas
@@ -402,7 +473,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `usuario_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `usuario_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas

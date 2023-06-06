@@ -30,11 +30,11 @@ $fechanacimiento=$_SESSION['usuario_fechanacimiento'];
                 
                 <li class="nav-item">
                     
-                    <a class="nav-link text-white" href="index.php"><img src="../img/Logo_UTFSM.png" width="30" height="30">PrestigueTravels</a>
+                    <a class="nav-link text-white" href="../users/index.php"><img src="../img/Logo_UTFSM.png" width="30" height="30">PrestigueTravels</a>
                 </li>
                 
                 <li class="nav-item">
-                        <a class="nav-link text-white" href="index.php">Inicio</a>
+                        <a class="nav-link text-white" href="../users/index.php">Inicio</a>
                     </li>
 
                     <li class="nav-item">
@@ -71,7 +71,7 @@ $fechanacimiento=$_SESSION['usuario_fechanacimiento'];
                                     <?php echo "Cuenta: $username $userlastname";?></a>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                                <a class="dropdown-item" href="./users/perfil.php">Ver perfil</a>
+                                <a class="dropdown-item" href="../users/perfil.php">Ver perfil</a>
                                 <a class="dropdown-item" href="../../control_cerrarsesion.php">Cerrar sesion</a>
                                 
                             </div>
@@ -88,13 +88,8 @@ $fechanacimiento=$_SESSION['usuario_fechanacimiento'];
                 
                        
         </nav>
-
-        
-
         <div class="container">
-
         <br/>
-            
             <div class="row">
 
 

@@ -21,7 +21,7 @@ $hoteles=$selectSQL->fetch_all(MYSQLI_ASSOC);
     <div class="card">
         <img class="card-img-top" src="https://images7.alphacoders.com/362/362619.jpg" alt="">
         <div class="card-body">
-            <h6 class="card-Viaje"><?php echo $hotel["hoteles_nombre"]; ?></h6>
+            <h6 class="card-Viaje"> <b><?php echo $hotel["hoteles_nombre"]; ?></b></h6>
             <p class="small"><?php  echo "Ubicacion: ".$hotel["hoteles_ciudad"];  ?></p>
 
             <div class="text-center">

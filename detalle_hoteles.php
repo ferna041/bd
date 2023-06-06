@@ -71,7 +71,7 @@ if($id==''||$token==''){
 
         if(!empty($_POST["btn-atc"])){
                 
-            $sqll=$conexion->query("INSERT INTO carrito VALUES ($user_id,$id)");  
+            $sqll=$conexion->query("INSERT INTO carrito VALUES ($user_id,$id,1)");  
             echo '<div class="alert alert-success"> Agregado al carrito! </div>';
 
         } 
@@ -91,6 +91,17 @@ if($id==''||$token==''){
             <h4 class="card-title"><?php echo $nombre; ?></h4>
             <br/>
             <img src="https://images7.alphacoders.com/362/362619.jpg" witdh="160" height="160">
+
+            
+                <?php
+                $sql=$conexion->query("SELECT * FROM compras WHERE usuario_id=$user_id AND productos_id=$id"); 
+                if($sql->fetch_all()){ ?>
+                    <br>
+                    <br/>
+                    <h4><a class="btn btn-dark" href="reseñas_hoteles.php?id=<?php echo $id;?>&token=<?php
+                echo hash_hmac("sha1",$id,KEY_TOKEN);?>">Dejar Reseña</a></h4>
+                    
+                <?php } ?>
 
         </div>
 
@@ -131,7 +142,6 @@ if($id==''||$token==''){
             <p class=small> No </p>
     
             <?php } ?>
-                   
                  
         </div>
 

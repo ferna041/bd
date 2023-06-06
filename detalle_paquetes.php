@@ -97,6 +97,17 @@ if($id==''||$token==''){
             <br/>
             <img src="https://images2.alphacoders.com/946/946565.jpg" witdh="160" height="160">
 
+            <?php
+                $sql=$conexion->query("SELECT * FROM compras WHERE usuario_id=$user_id AND productos_id=$id"); 
+                if($sql->fetch_all()){ ?>
+                    <br>
+                    <br/>
+                    <h4><a class="btn btn-dark" href="reseñas_paquetes.php?id=<?php echo $id;?>&token=<?php
+                echo hash_hmac("sha1",$id,KEY_TOKEN);?>">Dejar Reseña</a></h4>
+                    
+                <?php } ?>
+
+
         </div>
 
         <div class="col">
