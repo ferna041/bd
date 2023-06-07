@@ -150,10 +150,9 @@ if($id==''||$token==''){
             <?php 
 
                 $sql33=$conexion->query("SELECT * FROM carrito WHERE productos_id=$id AND usuario_id=$user_id");
-                $sql4 = $sql33;
+                $sql33=$sql33->fetch_all(MYSQLI_ASSOC);
 
-
-                if((sizeof($sql33->fetch_all()))>0){ 
+                if((sizeof($sql33))>0){ 
 
                     $cant = $sql33;
                     

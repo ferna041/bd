@@ -41,11 +41,10 @@ $lista_carrito = $sentenciaSQL->fetch_all(MYSQLI_ASSOC);
                     $cantidades=$conexion->query("UPDATE paquetes SET paquetes_disponibles=paquetes_disponibles-1 WHERE productos_id=$compra[productos_id]");
                 }
             }
-            $sql=$conexion->query("DELETE FROM carrito");  
+            $sql=$conexion->query("DELETE FROM carrito WHERE usuario_id=$user_id");  
             echo '<div class="alert alert-success"> COMPRA REALIZADA</div>';
         } 
 ?>
-
 
 
 
@@ -57,6 +56,11 @@ $hoteles_carrito = $sentenciaSQL->fetch_all(MYSQLI_ASSOC);
 $sentenciaSQL2= $conexion->query("SELECT * FROM paquetes INNER JOIN productos ON paquetes.productos_id=productos.producto_id INNER JOIN carrito
                                                 ON productos.producto_id=carrito.productos_id AND usuario_id=$user_id AND producto_tipo=2");
 $paquetes_carrito = $sentenciaSQL2->fetch_all(MYSQLI_ASSOC);
+
+$descuento=$conexion->query("SELECT * FROM carrito WHERE productos_id=0 AND usuario_id=$user_id");
+
+$bandera=0;
+if($descuento=$descuento->fetch_all(MYSQLI_ASSOC)){$bandera=1;}
 ?>
 
 
@@ -66,11 +70,10 @@ $paquetes_carrito = $sentenciaSQL2->fetch_all(MYSQLI_ASSOC);
             <thead>
                 <tr>
                     <th>Producto</th>
-                    <th>Precio total</th>
+                    <th>Precio</th>
                     <th>Cantidad</th>
-                    <th>descuento</th>
                     <th>subtotal</th> 
-                    <th></th>
+                    <th>eliminar</th>
                 </tr>
             </thead>
                 <tbody >
@@ -78,32 +81,47 @@ $paquetes_carrito = $sentenciaSQL2->fetch_all(MYSQLI_ASSOC);
                     if($paquetes_carrito == null && $hoteles_carrito == null){
                         echo '<tr><td colspan="5" class=text-center"<b> Carrito vacio...</b></td></tr></tbody></table>';
                     }else{
+                        $total=0;
                         foreach($paquetes_carrito as $producto){ ?>
                             <td><?php echo $producto["paquetes_nombre"]?></td>
-                            <td>$<?php echo $producto["paquetes_preciopp"]?></td>
-                            <td><?php echo 5 ?></td>
-                            <td><?php echo "si" ?></td>
-                            <td><?php echo 5*$producto["paquetes_preciopp"] ?></td>
+                            <td>$<?php echo $producto["paquetes_maxpp"]*$producto["paquetes_preciopp"]?></td>
+                            <td><?php echo $producto["cantidad"] ?></td>
+                            <td>$<?php echo $producto["paquetes_maxpp"]*$producto["paquetes_preciopp"]*$producto["cantidad"] ?></td>
                             </tbody>
-                    <?php } ?>
+                    <?php $total=$total+$producto["paquetes_maxpp"]*$producto["paquetes_preciopp"]*$producto["cantidad"];} ?>
                     <tbody >
                     <?php
                     foreach($hoteles_carrito as $producto){ ?>
                             <td><?php echo $producto["hoteles_nombre"]?></td>
-                            <td>$<?php echo $producto["hoteles_nombre"]?></td>
-                            <td><?php echo 5 ?></td>
-                            <td><?php echo "si" ?></td>
-                            <td><?php echo $producto["hoteles_nombre"] ?></td>
+                            <td>$<?php echo $producto["hoteles_precio"]?></td>
+                            <td><?php echo $producto["cantidad"] ?></td>
+                            <td>$<?php echo $producto["hoteles_precio"]*$producto["cantidad"] ?></td>
+                            <td>
+                                
+                            <form method="post">
+                            <input name="btn-delete<?php echo $producto["productos_id"]; ?>" type="submit" value="X" size="200">
+                            </form>
+
+
+                            </td>
                             </tbody>
-                    <?php } ?>
+                    <?php $total=$total+$producto["hoteles_precio"]*$producto["cantidad"];} ?>
                     
-                <tbody>
+                    <tbody>
                         <td></td>
+                        <td></td>
+                        <td><p class="h3 text-right" id="total"> DESCUENTO=  </td>
+                        <td colspan="4" >
+                            <p class="h3 text-left" id="total"><?php if($bandera){echo "$".$total*0.1; $total=$total*0.9;}else{echo "$0";}?></p>
+                        </td> 
+
+                </tbody>
+                <tbody>
                         <td></td>
                         <td></td>
                         <td><p class="h3 text-right" id="total"> TOTAL =  </td>
                         <td colspan="4" >
-                            <p class="h3 text-left" id="total"><?php echo "0"?></p>
+                            <p class="h3 text-left" id="total"><?php echo "$".$total;?></p>
                         </td> 
 
                 </tbody>

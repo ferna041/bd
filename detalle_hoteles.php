@@ -70,8 +70,19 @@ if($id==''||$token==''){
 <?php
 
         if(!empty($_POST["btn-atc"])){
-                
-            $sqll=$conexion->query("INSERT INTO carrito VALUES ($user_id,$id,1)");  
+            
+            $qlp=$conexion->query("SELECT * FROM carrito WHERE usuario_id=$user_id AND productos_id=$id");
+
+            if(sizeof($qlp->fetch_all(MYSQLI_ASSOC)) > 0){
+                $sqll=$conexion->query("UPDATE carrito SET cantidad=cantidad+1 WHERE usuario_id=$user_id AND productos_id=$id"); 
+            }
+            else{
+            $sqll=$conexion->query("INSERT INTO carrito VALUES ($user_id,$id,1)"); 
+            }
+            
+
+
+
             echo '<div class="alert alert-success"> Agregado al carrito! </div>';
 
         } 
@@ -189,20 +200,28 @@ if($id==''||$token==''){
             <?php 
 
                 $sql33=$conexion->query("SELECT * FROM carrito WHERE productos_id=$id AND usuario_id=$user_id");
-            
-                if((sizeof($datos=$sql33->fetch_all()))<3){ ?>
-                    <form method="post">
+                $sql33=$sql33->fetch_all(MYSQLI_ASSOC);
+
+                if((sizeof($sql33))>0){ 
+
+                    $cant = $sql33;
+                    
+                    if(($cant[0]["cantidad"])<3){?>
+                        <form method="post">
+                        <br/>
+                        <input name="btn-atc" class="btn btn-dark" type="submit" value="Agregar al carrito">
+                    </form>
+                    <?php } else {
+                        echo '<a name="" id="" class="btn btn-light" href="#" role="button">Máxima cantidad de este producto en el carrito</a>';
+                    
+                    } ?>
+            <?php } else { ?>
+                <form method="post">
                         <br/>
                         <input name="btn-atc" class="btn btn-dark" type="submit" value="Agregar al carrito">
                     </form>
 
-                    <?php 
-                    }else{
-                        echo '<a name="" id="" class="btn btn-light" href="#" role="button">Máxima cantidad de este prducto en el carrito</a>'
-                    ?>
-
-
-            <?php } ?>
+                <?php } ?>
 
 
             <?php 

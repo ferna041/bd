@@ -84,7 +84,53 @@ foreach($paquetes as $paquete){
 array_multisort(array_column($encuesta_paquetes, "promedio"), SORT_DESC, $encuesta_paquetes);
 ?>
 
+<?php
+if(!empty($_POST["btn-desc"])){
 
+    $des=$conexion->query("INSERT INTO carrito VALUES ($user_id,0,0)");
+}
+?>
+
+<?php 
+
+$prob=random_int(1,10);
+$descuento=$conexion->query("SELECT * FROM carrito WHERE productos_id=0 AND usuario_id=$user_id");
+$bandera=true;
+if($descuento=$descuento->fetch_all(MYSQLI_ASSOC)){$bandera=false;}
+
+if($prob<4 && $bandera){
+
+?>
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" ><b>QUE SUERTE!</b></h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Haz conseguido un descuento del 10% en tu proxima compra gracias al codigo: <b>10%xPRESTIGUE</b></p>
+                
+                <form method="post">
+                    <div class="row text-center">
+                    <div class="col-md-6">
+                    <input type="submit" name="btn-desc" class="close bg-success" value="Aceptar descuento"> 
+                    </div>
+                    </form>
+
+                    <div class="col-md-6">
+                    <button type="submit" class="close bg-danger" data-dismiss="modal">Rechazar descuento</button>
+                    </div>
+                    </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php 
+}
+?>
 
 <?php 
 if(true){ ?>
@@ -149,96 +195,90 @@ if(true){ ?>
 
 
 
-    <div class="col-md-6">
+    <div class="row">
 
-    <div class="card bg-primary text-left text-white">
-        <img class="card-img-top" src="holder.js/100px180/" alt="">
-        <div class="card-body">
-        <h4 class="card-title">Mejores Hoteles (votados por la comunidad)</h4>
-    </div>
-    </div>
+<div class="col-md-6">
 
-    <?php 
-    $contador=0;
-    foreach($encuesta_hoteles as $hotel){
-        if($contador==10) break;?> 
+<div class="card bg-primary text-left">
+    <img class="card-img-top" src="holder.js/100px180/" alt="">
+    <div class="card-body">
+    <h4 class="card-title text-white">Mejores Hoteles (votados por la comunidad)</h4>
+    </br>
     
-    <div class="col-md-5">
-    
-    <div class="card">
-        <img class="card-img-top" src="https://images7.alphacoders.com/362/362619.jpg" alt="">
-        <div class="card-body">
-            <h6 class="card-Viaje"> <b><?php echo $hotel["hoteles_nombre"]; ?></b></h6>
-            <p class="small"><?php  echo "promedio calificciones: ".$hotel["promedio"];  ?></p>
+<div class="row">
+<?php 
+$contador=0;
+foreach($encuesta_hoteles as $hotel){
+    if($contador==10) break;?> 
 
-            <div class="text-center">
-                <a class="btn btn-primary" href="../detalle_hoteles.php?id=<?php echo $hotel[0]["productos_id"];?>&token=<?php
-                echo hash_hmac("sha1",$hotel[0]["productos_id"],KEY_TOKEN);?>">Ver detalles</a>
-            </div>
+<div class="col-sm-6">
+
+
+
+<div class="card">
+    <img class="card-img-top" src="https://images7.alphacoders.com/362/362619.jpg" alt="">
+    <div class="card-body">
+        <h6 class="card-Viaje"> <b><?php echo $hotel["hoteles_nombre"]; ?></b></h6>
+        <p class="small"><?php  echo "promedio calificciones: ".$hotel["promedio"];  ?></p>
+        
+        <div class="text-center">
+            <a class="btn btn-primary" href="../detalle_hoteles.php?id=<?php echo $hotel[0]["productos_id"];?>&token=<?php
+            echo hash_hmac("sha1",$hotel[0]["productos_id"],KEY_TOKEN);?>">Ver detalles</a>
         </div>
     </div>
 </div>
-<div>
-        <div class="d-none d-sm-block">
-    </br>
-        </div>
-    </div>
-    
+
+</br>
+
+</div>
+
+
 <?php $contador=$contador+1;} ?>
 
+
+</div>
+</div>
+</div>
 </div>
 
 
 
+<div class="col-md-6">
+<div class="card bg-primary text-left">
+<img class="card-img-top" src="holder.js/100px180/" alt="">
+<div class="card-body">
+<h4 class="card-title text-white">Mejores Paquetes (votados por la comunidad)</h4>
+</br>
+<div class="row">
+<?php 
+$contador=0;
+foreach($encuesta_paquetes as $paquet){
+if($contador==10) break;?> 
 
+<div class="col-sm-6">
 
-
-
-
-
-    
-
-    <div class="col-md-6">
-    <div class="card bg-primary text-left text-white">
-        <img class="card-img-top" src="holder.js/100px180/" alt="">
-        <div class="card-body">
-        <h4 class="card-title">Mejores Paquetes (votados por la comunidad)</h4>
-    </div>
-    </div>
-
-    <?php 
-    $contador=0;
-    foreach($encuesta_paquetes as $paquet){
-        if($contador==10) break;?> 
-    
-    <div class="col-md-5">
-    
-    <div class="card">
-        <img class="card-img-top" src="https://images7.alphacoders.com/362/362619.jpg" alt="">
-        <div class="card-body">
-            <h6 class="card-Viaje"> <b><?php echo $paquet["paquetes_nombre"]; ?></b></h6>
-            <p class="small"><?php  echo "promedio calificciones: ".$paquet["promedio"];  ?></p>
-
-            <div class="text-center">
-                <a class="btn btn-primary" href="../detalle_hoteles.php?id=<?php echo $paquet[0]["productos_id"];?>&token=<?php
-                echo hash_hmac("sha1",$paquet[0]["productos_id"],KEY_TOKEN);?>">Ver detalles</a>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-        <div class="d-none d-sm-block">
+<div class="card">
+<img class="card-img-top" src="https://images2.alphacoders.com/946/946565.jpg" alt="">
+<div class="card-body">
+    <h6 class="card-Viaje"> <b><?php echo $paquet["paquetes_nombre"]; ?></b></h6></br>
+    <p class="small"><?php  echo "promedio calificciones: ".$paquet["promedio"];  ?></p>
     </br>
-        </div>
+    <div class="text-center">
+    <a class="btn btn-primary" href="../detalle_paquetes.php?id=<?php echo $paquet[0]["productos_id"];?>&token=<?php     
+                    echo hash_hmac("sha1",$paquet[0]["productos_id"],KEY_TOKEN);?>">Ver detalles</a>
     </div>
-    
-<?php $contador=$contador+1;} ?>
-
+</div>
+</div>
+</br>
 </div>
 
+<?php $contador=$contador+1;} ?>
+</div>
+</div>
+</div>
+</div>
+</div>
 
-    </div>
-    
 <?php } ?>
 
 
