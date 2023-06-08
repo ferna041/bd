@@ -22,7 +22,7 @@ if($id==''||$token==''){
 
     if($token==$token_tmp){
         
-        $sql=$conexion->query("SELECT paquetes_nombre,paquetes_airida,paquetes_airvuelta,paquetes_preciopp,paquetes_maxpp FROM paquetes WHERE productos_id=$id");
+        $sql=$conexion->query("SELECT paquetes_nombre,paquetes_airida,paquetes_airvuelta,paquetes_preciopp,paquetes_maxpp,paquetes_disponibles FROM paquetes WHERE productos_id=$id");
         
         if ($datos=$sql->fetch_object()){
 
@@ -31,7 +31,9 @@ if($id==''||$token==''){
             $vuelovuelta=$datos->paquetes_airvuelta;
             $preciopp=$datos->paquetes_preciopp;
             $maxpp=$datos->paquetes_maxpp;
-            
+            $disponibles=$datos->paquetes_disponibles;
+
+
             $sql2=$conexion->query("SELECT * FROM hoteles INNER JOIN hoteles_paquetes ON hoteles.productos_id=hoteles_paquetes.hoteles_id AND 
                                     paquetes_id=$id;");
 
@@ -84,6 +86,12 @@ if($id==''||$token==''){
 ?>
 
 
+<?php
+$sql0=$conexion->query("SELECT * FROM carrito WHERE productos_id=$id");
+$sql0=$sql0->fetch_all(MYSQLI_ASSOC);
+if($sql0){$disponibles=$disponibles-$sql0[0]["cantidad"];}
+?>
+
 <div class="card bg-primary text-center text-white text-left">
   <div class="card-body">
 
@@ -102,10 +110,16 @@ if($id==''||$token==''){
                 if($sql->fetch_all()){ ?>
                     <br>
                     <br/>
+                    <?php 
+                    $boton=$conexion->query("SELECT * FROM reseñas_paquetes WHERE usuario_id=$user_id AND productos_id=$id");
+                    $boton=$boton->fetch_all(MYSQLI_ASSOC);
+                    if($boton[0]["calidad_hoteles"]==null){ ?>
                     <h4><a class="btn btn-dark" href="reseñas_paquetes.php?id=<?php echo $id;?>&token=<?php
                 echo hash_hmac("sha1",$id,KEY_TOKEN);?>">Dejar Reseña</a></h4>
-                    
-                <?php } ?>
+                    <?php }else{ ?>
+                    <h4><a class="btn btn-dark" href="reseñas_paquetes.php?id=<?php echo $id;?>&token=<?php
+                echo hash_hmac("sha1",$id,KEY_TOKEN);?>">Editar Reseña</a></h4>
+                    <?php }} ?>
 
 
         </div>
@@ -128,7 +142,8 @@ if($id==''||$token==''){
                 }
 
             ?>
-                 
+                <h6><b> Paquetes disponibles: </b></h6>
+            <?php  echo "<p class=small>".$disponibles."</p>"  ?> 
         </div>
 
         <div class="col">
@@ -151,7 +166,10 @@ if($id==''||$token==''){
 
                 $sql33=$conexion->query("SELECT * FROM carrito WHERE productos_id=$id AND usuario_id=$user_id");
                 $sql33=$sql33->fetch_all(MYSQLI_ASSOC);
+                
+                
 
+                if($disponibles>0){
                 if((sizeof($sql33))>0){ 
 
                     $cant = $sql33;
@@ -171,8 +189,13 @@ if($id==''||$token==''){
                         <input name="btn-atc" class="btn btn-dark" type="submit" value="Agregar al carrito">
                     </form>
 
-                <?php } ?>
+                <?php }} else { echo '<a name="" id="" class="btn btn-light" href="#" role="button">Sin productos disponibles</a>';}?>
+
+
             <?php 
+    
+                    
+
 
                 $sql3=$conexion->query("SELECT * FROM wishlist WHERE producto_id=$id AND usuario_id=$user_id");
             
@@ -204,6 +227,57 @@ if($id==''||$token==''){
 
 
 </div>
+
+
+<?php
+$reseñas=$conexion->query("SELECT * FROM reseñas_paquetes INNER JOIN usuarios ON reseñas_paquetes.usuario_id=usuarios.usuario_id AND reseñas_paquetes.productos_id=$id");
+$reseñas=$reseñas->fetch_all(MYSQLI_ASSOC);
+?>
+
+<div>
+    <br></br>
+                </div>
+
+<div class="card text-left bg-primary">
+  <img class="card-img-top" src="holder.js/100px180/" alt="">
+  <div class="card-body">
+    <h4 class="card-title">Comentarios y calificaciones</h4>
+    </div>
+</div>
+    <?php   
+    foreach($reseñas as $res){ if($res["calidad_hoteles"]!=null){?>
+        
+        <div class="col-md-4">
+        
+        <br/>
+
+        <div class="card text-left text-white bg-primary">
+
+            
+            <div class="card-body">
+                
+                <img src="../img/user-icon.png" width="70" height="70">
+                <?php echo "Usuario: ".$res["usuario_nombre"]." ".$res["usuario_apellido"] ; ?>
+                <p class="card-text"><b>calidad de hoteles:  </b><?php echo  $res["calidad_hoteles"] ?><i class="fas fa-star" style="color:yellow;"></i></p>
+                <p class="card-text"><b>transporte:  </b><?php echo  $res["transporte"]?><i class="fas fa-star" style="color:yellow;"></i></p>
+                <p class="card-text"><b>servicio:  </b><?php echo  $res["servicio"]?><i class="fas fa-star" style="color:yellow;"></i></p>
+                <p class="card-text"><b>Precio y calidad:  </b><?php echo  $res["precio_calidad"]?><i class="fas fa-star" style="color:yellow;"></i></p>
+                <?php if($res["reseña"]!=""){?>
+                <p class="card-text"><b>Reseña:  </b><?php echo  $res["reseña"]?></p>
+                <?php }?>
+
+            </div>
+
+    </div><br/>
+
+    </div>
+    <?php }} ?>
+
+
+
+
+
+
 
 
 

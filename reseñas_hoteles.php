@@ -1,6 +1,5 @@
 <?php
 include("templates/cabecera.php");
-
 include("conexionbd.php");
 include("config.php");
 
@@ -17,14 +16,19 @@ if(!empty($_POST["btn-atr"])){
     $datos_decoracion=$_POST["decoracion"];
     $datos_camas=$_POST["camas"];
     $datos_reseña=$_POST["reseña"];
+    
+    date_default_timezone_get();
+    $fecha_actual = Date("Y-m-d"); 
 
-    $dele=$conexion->query("DELETE FROM reseñas_hoteles WHERE productos_id=$id AND usuario_id=$user_id");
-    $sql=$conexion->query("INSERT INTO reseñas_hoteles VALUES ($id, $user_id, $datos_limpieza,
-    $datos_servicio, $datos_decoracion,$datos_camas,'$datos_reseña')");
+    $sql=$conexion->query("UPDATE reseñas_hoteles SET limpieza=$datos_limpieza, servicio=$datos_servicio, decoración=$datos_decoracion,calidad_camas=$datos_camas,Reseña='$datos_reseña', fecha_reseña='$fecha_actual' WHERE productos_id=$id AND usuario_id=$user_id");
     
     echo '<div class="alert alert-success"> Gracias por darnos tu opinión! </div>';
-    
+}
 
+if(!empty($_POST["btn-dr"])){
+
+    $sql=$conexion->query("UPDATE reseñas_hoteles SET limpieza=null, servicio=null, decoración=null,calidad_camas=null,Reseña=null,fecha_reseña=null WHERE productos_id=$id AND usuario_id=$user_id");
+    echo '<div class="alert alert-success"> reseña eliminada.</div>';
 }
 
 
@@ -60,14 +64,7 @@ if($id==''||$token==''){
     
     
 };
-
-
-
-
 ?>
-
-
-
 
 <div class="card bg-primary text-center text-white text-left">
   <div class="card-body">
@@ -107,11 +104,11 @@ if(($limpieza)==""){ ?>
         <input type="number" min="1" max="5" name="camas" placeholder="Ingrese" required>
     </b></h6>
         <h6 ><b>
-        <textarea type="text" rows="4" cols="30" minlength=1  maxlength=200 name="reseña" required>Déjanos un comentario!
-        </textarea>
+        <textarea type="text" rows="4" cols="30" minlength=1  maxlength=200 name="reseña"></textarea>
+        
     </b></h6>
 
-    <input name="btn-atr" type="submit" value="Guardar Reseña">
+    <input name="btn-atr" class="bg-success" type="submit" value="Guardar Reseña">
 </form>
 <?php } else {?>
     <form method="post">
@@ -129,10 +126,11 @@ if(($limpieza)==""){ ?>
         <input type="number" min="1" max="5" name="camas" value="<?php echo $calidad_camas ?>" required>
     </b></h6>
         <h6 ><b>
-        <textarea type="text" rows="4" cols="30" minlength=1  maxlength=200 name="reseña" required><?php echo$reseña?>
-        </textarea>
+        <textarea type="text" rows="4" cols="30" minlength=1  maxlength=200 name="reseña" ><?php echo$reseña;?></textarea>   
     </b></h6>
-    <input name="btn-atr"  type="submit" value="Actualizar Reseña">
+    <input name="btn-atr"  type="submit" class="bg-success" value="Actualizar Reseña">
+    <input name="btn-dr" class="bg-danger" type="submit" value="Eliminar Reseña">
+
 <?php 
 
 } ?> 

@@ -5,10 +5,8 @@
 
 include("conexionbd.php");
 include("config.php");
-$querypaquetes=$conexion->query("SELECT * FROM busqueda");
-$queryhoteles=$conexion->query("SELECT * FROM busqueda");
-$flag=false;
-$flag2=false;
+$querypaquetes=$conexion->query("SELECT DISTINCT Paquete,NombrePaquete FROM busqueda");
+$queryhoteles=$conexion->query("SELECT * FROM hoteles");
 
 
 if(isset($_POST["btnsearch"])){
@@ -17,7 +15,6 @@ if(isset($_POST["btnsearch"])){
     $ciudad=$_POST['Ciudad'];
     $inicio=$_POST['fechainicio'];
     $termino=$_POST['fechatermino'];
-    $flag=true;
 
     if(!empty($_POST['nombre']) && !empty($_POST['Ciudad']) && !empty($_POST['fechainicio']) && !empty($_POST['fechatermino'])){
 
@@ -46,19 +43,16 @@ if(isset($_POST["btnsearch"])){
 
     } else if(!empty($_POST['nombre']) && !empty($_POST['Ciudad'])){
 
-        $flag2=true;
         $querypaquetes=$conexion->query("SELECT * FROM busqueda WHERE NombrePaquete LIKE '%$nombre%' AND Ciudad='$ciudad'");
         $queryhoteles=$conexion->query("SELECT * FROM hoteles WHERE hoteles_nombre LIKE '%$nombre%' AND hoteles_ciudad='$ciudad'");
 
     } else if(!empty($_POST['nombre'])){
 
-        $flag2=true;
-        $querypaquetes=$conexion->query("SELECT * FROM busqueda WHERE NombrePaquete LIKE '%$nombre%'");
+        $querypaquetes=$conexion->query("SELECT DISTINCT Paquete,NombrePaquete FROM busqueda WHERE NombrePaquete LIKE '%$nombre%'");
         $queryhoteles=$conexion->query("SELECT * FROM hoteles WHERE hoteles_nombre LIKE '%$nombre%'");
 
     } else if (!empty($_POST['Ciudad'])){
 
-        $flag2=true;
         $querypaquetes=$conexion->query("SELECT * FROM busqueda WHERE Ciudad='$ciudad'");
         $queryhoteles=$conexion->query("SELECT * FROM hoteles WHERE hoteles_ciudad='$ciudad'");
 
@@ -144,7 +138,7 @@ $paquetes=$querypaquetes->fetch_all(MYSQLI_ASSOC);
 </div>
 
 
-<?php if($flag==true)foreach($paquetes as $paquete){?> 
+<?php foreach($paquetes as $paquete){?> 
     
     <div class="col-md-3">
         <br/><br/>
@@ -174,7 +168,7 @@ $paquetes=$querypaquetes->fetch_all(MYSQLI_ASSOC);
 <?php } ?>
 
 
-<?php if($flag2==true)foreach($hoteles as $hotel){?> 
+<?php foreach($hoteles as $hotel){?> 
     
     <div class="col-md-3">
     <br/><br/>

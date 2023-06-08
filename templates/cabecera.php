@@ -77,7 +77,7 @@ $fechanacimiento=$_SESSION['usuario_fechanacimiento'];
                             <?php echo "Cuenta: $username $userlastname";?></a>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                                <a class="dropdown-item" href="./users/perfil.php">Ver perfil</a>
+                                <a class="dropdown-item" href="../users/perfil.php">Ver perfil</a>
                                 <a class="dropdown-item" href="../../control_cerrarsesion.php">Cerrar sesion</a>
                                 
                             </div>

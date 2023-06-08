@@ -4,6 +4,8 @@ include("config.php");
 include("conexionbd.php");
 ?>
 
+
+
 <?php
 $sentenciaSQL= $conexion->query("SELECT * FROM hoteles INNER JOIN productos ON hoteles.productos_id=productos.producto_id INNER JOIN carrito 
                                                 ON productos.producto_id=carrito.productos_id AND usuario_id=$user_id AND producto_tipo=1");
@@ -20,25 +22,24 @@ $lista_carrito = $sentenciaSQL->fetch_all(MYSQLI_ASSOC);
             foreach($lista_compra as $compra){
                 $comprobacion=$conexion->query("SELECT * FROM compras WHERE usuario_id=$compra[usuario_id] AND productos_id=$compra[productos_id]");
                 if(!($comprobacion->fetch_object())){
-                    $agregar=$conexion->query("INSERT INTO compras VALUES ($compra[productos_id],$compra[usuario_id])");
                     $lol=$conexion->query("SELECT * FROM productos WHERE producto_id=$compra[productos_id]");
                     $lol=$lol->fetch_object();
                     
                     if(($lol->producto_tipo)==1){
-                        $agrgg=$conexion->query("INSERT INTO reseñas_hoteles VALUES ($compra[productos_id],$user_id,NULL,NULL,NULL,NULL,NULL)");
+                        $agrgg=$conexion->query("INSERT INTO reseñas_hoteles VALUES ($compra[productos_id],$user_id,NULL,NULL,NULL,NULL,NULL,NULL)");
                     }
                     if(($lol->producto_tipo)==2){
-                        $agrgg=$conexion->query("INSERT INTO reseñas_paquetes VALUES ($compra[productos_id],$user_id,NULL,NULL,NULL,NULL,NULL)");
+                        $agrgg=$conexion->query("INSERT INTO reseñas_paquetes VALUES ($compra[productos_id],$user_id,NULL,NULL,NULL,NULL,NULL,NULL)");
                     }  
                 }
                 $lol=$conexion->query("SELECT * FROM productos WHERE producto_id=$compra[productos_id]");
                 $lol=$lol->fetch_object();
 
                 if(($lol->producto_tipo)==1){
-                    $cantidades=$conexion->query("UPDATE hoteles SET hoteles_habitacionesdisp=hoteles_habitacionesdisp-1 WHERE productos_id=$compra[productos_id]");
+                    $cantidades=$conexion->query("UPDATE hoteles SET hoteles_habitacionesdisp=hoteles_habitacionesdisp-$compra[cantidad] WHERE productos_id=$compra[productos_id]");
                 }
                 if(($lol->producto_tipo)==2){
-                    $cantidades=$conexion->query("UPDATE paquetes SET paquetes_disponibles=paquetes_disponibles-1 WHERE productos_id=$compra[productos_id]");
+                    $cantidades=$conexion->query("UPDATE paquetes SET paquetes_disponibles=paquetes_disponibles-$compra[cantidad] WHERE productos_id=$compra[productos_id]");
                 }
             }
             $sql=$conexion->query("DELETE FROM carrito WHERE usuario_id=$user_id");  
@@ -65,6 +66,7 @@ if($descuento=$descuento->fetch_all(MYSQLI_ASSOC)){$bandera=1;}
 
 
 <main>  
+<?php include("eliminarcarrito.php")?>
     <div class="table-responsive" >
         <table class="table bg-primary text-white">
             <thead>
@@ -87,6 +89,11 @@ if($descuento=$descuento->fetch_all(MYSQLI_ASSOC)){$bandera=1;}
                             <td>$<?php echo $producto["paquetes_maxpp"]*$producto["paquetes_preciopp"]?></td>
                             <td><?php echo $producto["cantidad"] ?></td>
                             <td>$<?php echo $producto["paquetes_maxpp"]*$producto["paquetes_preciopp"]*$producto["cantidad"] ?></td>
+                            <td>
+                            <form method="post">
+                            <a href="carrito.php?id=<?=$producto["productos_id"]?>" class="btn btn-small btn-danger"><i class="fas fa-trash"></i></a>
+                            </form>
+                        </td>
                             </tbody>
                     <?php $total=$total+$producto["paquetes_maxpp"]*$producto["paquetes_preciopp"]*$producto["cantidad"];} ?>
                     <tbody >
@@ -99,7 +106,7 @@ if($descuento=$descuento->fetch_all(MYSQLI_ASSOC)){$bandera=1;}
                             <td>
                                 
                             <form method="post">
-                            <input name="btn-delete<?php echo $producto["productos_id"]; ?>" type="submit" value="X" size="200">
+                            <a href="carrito.php?id=<?=$producto["productos_id"]?>" class="btn btn-small btn-danger"><i class="fas fa-trash"></i></a>
                             </form>
 
 

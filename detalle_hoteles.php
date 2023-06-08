@@ -23,7 +23,7 @@ if($id==''||$token==''){
     if($token==$token_tmp){
         
         $sql=$conexion->query("SELECT hoteles_nombre,hoteles_estrellas,hoteles_precio,hoteles_estacionamiento,hoteles_piscina,hoteles_lavanderia,
-        hoteles_desayuno,hoteles_petfriendly FROM hoteles WHERE productos_id=$id");
+        hoteles_desayuno,hoteles_petfriendly,hoteles_habitacionesdisp FROM hoteles WHERE productos_id=$id");
         
         if ($datos=$sql->fetch_object()){
 
@@ -35,7 +35,7 @@ if($id==''||$token==''){
             $lavanderia=$datos->hoteles_lavanderia;
             $desayuno=$datos->hoteles_desayuno;
             $petfriendly=$datos->hoteles_petfriendly;
-            
+            $disponibles=$datos->hoteles_habitacionesdisp;
         }
 
     } else{
@@ -87,8 +87,11 @@ if($id==''||$token==''){
 
         } 
 ?>
-
-
+<?php
+$sql0=$conexion->query("SELECT * FROM carrito WHERE productos_id=$id");
+$sql0=$sql0->fetch_all(MYSQLI_ASSOC);
+if($sql0){$disponibles=$disponibles-$sql0[0]["cantidad"];}
+?>
 
 <div class="card bg-primary text-center text-white text-left">
   <div class="card-body">
@@ -109,10 +112,17 @@ if($id==''||$token==''){
                 if($sql->fetch_all()){ ?>
                     <br>
                     <br/>
+                    <?php 
+                    $boton=$conexion->query("SELECT * FROM reseñas_hoteles WHERE usuario_id=$user_id AND productos_id=$id");
+                    $boton=$boton->fetch_all(MYSQLI_ASSOC);
+                    if($boton[0]["limpieza"]==null){ ?>
                     <h4><a class="btn btn-dark" href="reseñas_hoteles.php?id=<?php echo $id;?>&token=<?php
                 echo hash_hmac("sha1",$id,KEY_TOKEN);?>">Dejar Reseña</a></h4>
+                    <?php }else{ ?>
+                    <h4><a class="btn btn-dark" href="reseñas_hoteles.php?id=<?php echo $id;?>&token=<?php
+                echo hash_hmac("sha1",$id,KEY_TOKEN);?>">Editar Reseña</a></h4>
                     
-                <?php } ?>
+                <?php }} ?>
 
         </div>
 
@@ -153,6 +163,8 @@ if($id==''||$token==''){
             <p class=small> No </p>
     
             <?php } ?>
+            <h6><b> Habitaciones disponibles: </b></h6>
+            <?php  echo "<p class=small>".$disponibles."</p>"  ?> 
                  
         </div>
 
@@ -202,6 +214,8 @@ if($id==''||$token==''){
                 $sql33=$conexion->query("SELECT * FROM carrito WHERE productos_id=$id AND usuario_id=$user_id");
                 $sql33=$sql33->fetch_all(MYSQLI_ASSOC);
 
+
+                if($disponibles>0){
                 if((sizeof($sql33))>0){ 
 
                     $cant = $sql33;
@@ -221,7 +235,7 @@ if($id==''||$token==''){
                         <input name="btn-atc" class="btn btn-dark" type="submit" value="Agregar al carrito">
                     </form>
 
-                <?php } ?>
+                <?php } } else { echo '<a name="" id="" class="btn btn-light" href="#" role="button">Sin productos disponibles</a>'; }?>
 
 
             <?php 
@@ -242,23 +256,54 @@ if($id==''||$token==''){
                         <br/>
                         <input name="btn-dtw" class="btn btn-dark" type="submit" value="Eliminar de wishlist">
                     </form>
-
-
             <?php } ?>
-            
-            
-
         </div>
+    </div>
+</div>
+</div>
+
+<?php
+$reseñas=$conexion->query("SELECT * FROM reseñas_hoteles INNER JOIN usuarios ON reseñas_hoteles.usuario_id=usuarios.usuario_id AND reseñas_hoteles.productos_id=$id");
+$reseñas=$reseñas->fetch_all(MYSQLI_ASSOC);
+?>
+
+<div>
+    <br></br>
+                </div>
+
+<div class="card text-left bg-primary">
+  <img class="card-img-top" src="holder.js/100px180/" alt="">
+  <div class="card-body">
+    <h4 class="card-title">Comentarios y calificaciones</h4>
+    </div>
+</div>
+    <?php   
+    foreach($reseñas as $res){ if($res["limpieza"]!=null){?>
+        <div class="col-md-4">
+        
+        <br/>
+
+        <div class="card text-left text-white bg-primary">
+
+            
+            <div class="card-body">
+                
+                <img src="../img/user-icon.png" width="70" height="70">
+                <?php echo "Usuario: ".$res["usuario_nombre"]." ".$res["usuario_apellido"] ; ?>
+                <p class="card-text"><b>limpieza:  </b><?php echo  $res["limpieza"] ?> <i class="fas fa-star" style="color:yellow;"></i></p>
+                <p class="card-text"><b>servicio:  </b><?php echo  $res["servicio"]?><i class="fas fa-star" style="color:yellow;"></i></p>
+                <p class="card-text"><b>decoración:  </b><?php echo  $res["decoración"]?><i class="fas fa-star" style="color:yellow;"></i></p>
+                <p class="card-text"><b>calidad de camas:  </b><?php echo  $res["calidad_camas"]?><i class="fas fa-star" style="color:yellow;"></i></p>
+                <?php if($res["Reseña"]!=""){?>
+                <p class="card-text"><b>Reseña:  </b><?php echo  $res["Reseña"]?></p>
+                <?php }?>
+
+            </div>
+
+    </div><br/>
 
     </div>
-    
-</div>
-
-
-</div>
-
-
-
+    <?php }} ?>
 
 
 <?php include("templates/pie.php"); ?>

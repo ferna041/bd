@@ -17,15 +17,24 @@ if(!empty($_POST["btn-atr"])){
     $datos_servicio=$_POST["servicio"];
     $datos_precio_calidad=$_POST["precio_calidad"];
     $datos_reseña=$_POST["reseña"];
+    date_default_timezone_get();
+    $fecha_actual = Date("Y-m-d"); 
 
-    $dele=$conexion->query("DELETE FROM reseñas_paquetes WHERE productos_id=$id AND usuario_id=$user_id");
-    $sql=$conexion->query("INSERT INTO reseñas_paquetes VALUES ($id, $user_id, $datos_calidad_hoteles,
-    $datos_transporte, '$datos_reseña', $datos_servicio,$datos_precio_calidad)");
+    $sql=$conexion->query("UPDATE reseñas_paquetes SET calidad_hoteles=$datos_calidad_hoteles, transporte=$datos_transporte,
+    servicio=$datos_servicio, precio_calidad=$datos_precio_calidad, reseña='$datos_reseña', reseña_fecha='$fecha_actual' WHERE productos_id=$id AND usuario_id=$user_id");
     
     echo '<div class="alert alert-success"> Gracias por darnos tu opinión! </div>';
-    
-
 }
+
+
+if(!empty($_POST["btn-dr"])){
+
+    $sql=$conexion->query("UPDATE reseñas_paquetes SET calidad_hoteles=null, transporte=null,
+    servicio=null, precio_calidad=null, reseña=null WHERE productos_id=$id AND usuario_id=$user_id");
+    
+    echo '<div class="alert alert-success"> reseña eliminada.</div>';
+}
+
 
 
 if($id==''||$token==''){
@@ -105,11 +114,10 @@ if(($calidad_hoteles)==""){ ?>
         <input type="number" min="1" max="5" name="precio_calidad" placeholder="Ingrese" required>
     </b></h6>
         <h6 ><b>
-        <textarea type="text" rows="4" cols="30" minlength=1  maxlength=200 name="reseña" required>Déjanos un comentario!
-        </textarea>
+        <textarea type="text" rows="4" cols="30" minlength=1  maxlength=200 name="reseña"></textarea>
     </b></h6>
 
-    <input name="btn-atr" type="submit" value="Guardar Reseña">
+    <input name="btn-atr" class="bg-success" type="submit" value="Guardar Reseña">
 </form>
 <?php } else {?>
     <form method="post">
@@ -127,10 +135,10 @@ if(($calidad_hoteles)==""){ ?>
         <input type="number" min="1" max="5" name="precio_calidad" value="<?php echo $precio_calidad ?>" required>
     </b></h6>
         <h6 ><b>
-        <textarea type="text" rows="4" cols="30" minlength=1  maxlength=200 name="reseña" required><?php echo$reseña?>
-        </textarea>
+        <textarea type="text" rows="4" cols="30" minlength=1  maxlength=200 name="reseña"><?php echo$reseña?></textarea>
     </b></h6>
-    <input name="btn-atr"  type="submit" value="Actualizar Reseña">
+    <input name="btn-atr"  class="bg-success" type="submit" value="Actualizar Reseña">
+    <input name="btn-dr" class="bg-danger" type="submit" value="Eliminar Reseña">
 <?php 
 
 } ?> 

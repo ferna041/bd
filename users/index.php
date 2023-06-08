@@ -131,7 +131,11 @@ if($prob<4 && $bandera){
 <?php 
 }
 ?>
-
+<div>
+        <div class="d-none d-sm-block">
+    </br>
+        </div>
+    </div>
 <?php 
 if(true){ ?>
     
@@ -187,7 +191,7 @@ if(true){ ?>
 
     <div>
         <div class="d-none d-sm-block">
-    </br>
+    </br><br/>
         </div>
     </div>
 
